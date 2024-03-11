@@ -12,13 +12,10 @@ spec:
     namespace: application
     server: https://kubernetes.default.svc
   project: default
-  sources:
-    - path: nonlive/services/test
-      repoURL: https://github.com/imayobrown/argocd-test.git
-      targetRevision: HEAD
-    - path: nonlive/services/test
-      repoURL: https://github.com/imayobrown/argocd-test-kustomizations.git
-      targetRevision: HEAD
+  source:
+    path: nonlive/services/test
+    repoURL: https://github.com/imayobrown/argocd-test.git
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
