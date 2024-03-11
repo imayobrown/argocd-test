@@ -5,13 +5,7 @@ resources:
 - deployment.yaml
 
 patches:
-- patch: | 
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: example-deployment
-    spec:
-      replicas: 2
+- path: patches/deployment-patches.yaml
   target:
     kind: Deployment
     name: example-deployment
