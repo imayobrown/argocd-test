@@ -1,0 +1,6 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: not-important
+spec:
+  maxReplicas: 7

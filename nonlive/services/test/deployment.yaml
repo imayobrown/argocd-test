@@ -2,8 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example-deployment
+  labels:
+    app: my-app
 spec:
+<<<<<<< HEAD
   replicas: 10
+=======
+  replicas: 3
+>>>>>>> 64be03b (test)
   selector:
     matchLabels:
       app: example-app
