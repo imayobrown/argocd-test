@@ -1,4 +1,4 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata: {name: test}
-spec: {maxReplicas: 10, minReplicas: 3, targetCPUUtilizationPercentage: 70}
+spec: {maxReplicas: 10, minReplicas: 3, targetCPUUtilizationPercentage: 80}
