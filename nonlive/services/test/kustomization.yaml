@@ -7,4 +7,4 @@ patches:
 - path: patches/hpa-patch-v2.yaml
   target: {group: autoscaling, kind: HorizontalPodAutoscaler, labelSelector: name=test,
     version: v2}
-resources: [horizontal_pod_autoscaler.yaml, deployment_strategy.yaml, managed_microservice.yaml]
+resources: [horizontal_pod_autoscaler.yaml]
