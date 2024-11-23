@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginx:1.26 # Replace with your application image
+          image: custom-nginx:1
           ports:
             - containerPort: 80
 ---
