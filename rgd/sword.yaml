@@ -41,7 +41,6 @@ spec:
               containers:
                 - name: anvil
                   image: anvil:${schema.spec.imageTag}
-                  imagePullPolicy: Never
                   ports:
                     - containerPort: 8000
 
