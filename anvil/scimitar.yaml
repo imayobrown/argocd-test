@@ -1,7 +1,0 @@
-apiVersion: kro.run/v1alpha1
-kind: Sword
-metadata:
-  name: scimitar
-spec:
-  name: scimitar
-  imageTag: goodbye
