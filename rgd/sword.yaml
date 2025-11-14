@@ -31,8 +31,8 @@ spec:
           replicas: 5
           strategy:
             canary:
-              canaryService: ${canaryService.metadata.name}
-              stableService: ${stableService.metadata.name}
+              canaryService: ${serviceCanary.metadata.name}
+              stableService: ${serviceStable.metadata.name}
               trafficRouting:
                 istio:
                   virtualService:
