@@ -1,0 +1,73 @@
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: sword
+spec:
+  # kro uses this simple schema to create your CRD schema and apply it
+  # The schema defines what users can provide when they instantiate the RGD (create an instance).
+  schema:
+    apiVersion: v1alpha1
+    kind: Sword
+    spec:
+      # Spec fields that users can provide.
+      name: string
+      imageTag: string
+
+  # Define the resources this API will manage.
+  resources:
+    - id: rollout
+      template:
+        apiVersion: argoproj.io/v1alpha1
+        kind: Rollout
+        metadata:
+          name: ${schema.spec.name}
+          namespace: anvil
+        spec:
+          replicas: 5
+          strategy:
+            canary:
+              steps:
+                - setWeight: 50
+                - pause: {duration: 5m}
+                - setWeight: 100
+          selector:
+            matchLabels:
+              app: ${schema.spec.name}
+          template:
+            metadata:
+              labels:
+                app: ${schema.spec.name}
+            spec:
+              containers:
+                - name: anvil
+                  image: anvil:${schema.spec.imageTag}
+                  imagePullPolicy: Never
+                  ports:
+                    - containerPort: 8000
+
+    - id: serviceActive
+      template:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: ${schema.spec.name}-service-active
+        spec:
+          # selector: ${deployment.spec.selector.matchLabels} # Use the rollout selector
+          selector: ${rollout.spec.selector.matchLabels} # Use the rollout selector
+          ports:
+            - protocol: TCP
+              port: 80
+              targetPort: 80
+
+    - id: servicePreview
+      template:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: ${schema.spec.name}-service-preview
+        spec:
+          selector: ${rollout.spec.selector.matchLabels} # Use the rollout selector
+          ports:
+            - protocol: TCP
+              port: 80
+              targetPort: 80
