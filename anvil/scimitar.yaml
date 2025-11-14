@@ -4,4 +4,4 @@ metadata:
   name: scimitar
 spec:
   name: scimitar
-  imageTag: hello
+  imageTag: goodbye
