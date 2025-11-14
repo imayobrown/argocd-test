@@ -49,12 +49,12 @@ spec:
                   ports:
                     - containerPort: 8000
 
-    - id: serviceActive
+    - id: serviceStable
       template:
         apiVersion: v1
         kind: Service
         metadata:
-          name: ${schema.spec.name}-service-active
+          name: ${schema.spec.name}-stable
           ownerReferences:
             - apiVersion: kro.run/v1alpha1
               kind: ${schema.kind}
@@ -68,12 +68,12 @@ spec:
               port: 80
               targetPort: 80
 
-    - id: servicePreview
+    - id: serviceCanary
       template:
         apiVersion: v1
         kind: Service
         metadata:
-          name: ${schema.spec.name}-service-preview
+          name: ${schema.spec.name}-canary
           ownerReferences:
             - apiVersion: kro.run/v1alpha1
               kind: ${schema.kind}
@@ -85,3 +85,26 @@ spec:
             - protocol: TCP
               port: 80
               targetPort: 80
+
+    - id: virtualService
+      template:
+        apiVersion: networking.istio.io/v1beta1
+        kind: VirtualService
+        metadata:
+          name: ${schema.spec.name}
+          ownerReferences:
+            - apiVersion: kro.run/v1alpha1
+              kind: ${schema.kind}
+              name: ${schema.metadata.name}
+              uid: ${schema.metadata.uid}
+        spec:
+          hosts:
+            - ${schema.spec.name}.anvil.svc.cluster.local
+          http:
+            - route:
+                - destination:
+                    host: ${schema.spec.name}-stable
+                  weight: 100
+                - destination:
+                    host: ${schema.spec.name}-canary
+                  weight: 0
