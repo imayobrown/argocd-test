@@ -31,8 +31,11 @@ spec:
           replicas: 5
           strategy:
             canary:
-              canaryService: ${serviceCanary.metadata.name}
-              stableService: ${serviceStable.metadata.name}
+              # I dont like that these are hardcoded to match the service names
+              # but kro complains about a circular dependency if the rollout references
+              # the service and the service references the rollout
+              canaryService: ${schema.spec.name}-canary
+              stableService: ${schema.spec.name}-stable
               trafficRouting:
                 istio:
                   virtualService:
