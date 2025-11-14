@@ -55,6 +55,11 @@ spec:
         kind: Service
         metadata:
           name: ${schema.spec.name}-service-active
+          ownerReferences:
+            - apiVersion: kro.run/v1alpha1
+              kind: ${schema.kind}
+              name: ${schema.metadata.name}
+              uid: ${schema.metadata.uid}
         spec:
           # selector: ${deployment.spec.selector.matchLabels} # Use the rollout selector
           selector: ${rollout.spec.selector.matchLabels} # Use the rollout selector
@@ -69,6 +74,11 @@ spec:
         kind: Service
         metadata:
           name: ${schema.spec.name}-service-preview
+          ownerReferences:
+            - apiVersion: kro.run/v1alpha1
+              kind: ${schema.kind}
+              name: ${schema.metadata.name}
+              uid: ${schema.metadata.uid}
         spec:
           selector: ${rollout.spec.selector.matchLabels} # Use the rollout selector
           ports:
