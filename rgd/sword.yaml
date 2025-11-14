@@ -31,6 +31,12 @@ spec:
           replicas: 5
           strategy:
             canary:
+              canaryService: ${canaryService.metadata.name}
+              stableService: ${stableService.metadata.name}
+              trafficRouting:
+                istio:
+                  virtualService:
+                    name: ${virtualService.metadata.name}
               steps:
                 - setWeight: 50
                 - pause: {duration: 5m}
