@@ -94,7 +94,7 @@ spec:
 
     - id: virtualService
       template:
-        apiVersion: networking.istio.io/v1beta1
+        apiVersion: networking.istio.io/v1alpha3
         kind: VirtualService
         metadata:
           name: ${schema.spec.name}
@@ -104,10 +104,13 @@ spec:
               name: ${schema.metadata.name}
               uid: ${schema.metadata.uid}
         spec:
+          gateways:
+            - anvil-gateway
           hosts:
             - ${schema.spec.name}.anvil.svc.cluster.local
           http:
-            - route:
+            - name: primary
+              route:
                 - destination:
                     host: ${schema.spec.name}-stable
                   weight: 100
