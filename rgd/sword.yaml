@@ -39,8 +39,8 @@ spec:
                 app: ${schema.spec.name}
             spec:
               containers:
-                - name: anvil
-                  image: anvil:${schema.spec.imageTag}
+                - name: anvil-server
+                  image: anvil-server:${schema.spec.imageTag}
                   ports:
                     - containerPort: 8000
 
